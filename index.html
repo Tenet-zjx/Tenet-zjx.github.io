@@ -2,19 +2,53 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#102033" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
-      name="description"
-      content="批量导入期初、采购与组装 Excel，按月末一次加权平均法计算 SKU 期末库存单价。"
+      http-equiv="refresh"
+      content="3;url=https://tenet-zjx.github.io/inventory-cost-calculator/"
     />
-    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
-    <link rel="manifest" href="./manifest.webmanifest" />
-    <title>衡仓 · 库存成本工作台</title>
-    <script type="module" crossorigin src="./assets/index-BDrf7DWj.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CoPD4e3C.css">
+    <link
+      rel="canonical"
+      href="https://tenet-zjx.github.io/inventory-cost-calculator/"
+    />
+    <title>库存月末加权成本工作台</title>
+    <script>
+      (() => {
+        const destination = new URL(
+          "/inventory-cost-calculator/",
+          window.location.origin,
+        );
+        destination.search = window.location.search;
+        destination.hash = window.location.hash;
+
+        const redirect = () => window.location.replace(destination.href);
+
+        if (!("serviceWorker" in navigator)) {
+          redirect();
+          return;
+        }
+
+        navigator.serviceWorker
+          .getRegistrations()
+          .then((registrations) =>
+            Promise.all(
+              registrations
+                .filter(
+                  (registration) =>
+                    registration.scope ===
+                    new URL("/", window.location.origin).href,
+                )
+                .map((registration) => registration.unregister()),
+            ),
+          )
+          .then(redirect, redirect);
+      })();
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <p>
+      正在进入库存月末加权成本工作台。若未自动跳转，请
+      <a href="https://tenet-zjx.github.io/inventory-cost-calculator/">点击这里</a>。
+    </p>
   </body>
 </html>
